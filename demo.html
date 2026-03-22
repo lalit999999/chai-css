@@ -1,0 +1,2650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChaiCSS v2.0 - Complete Documentation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #667eea;
+      --primary-dark: #764ba2;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-900: #111827;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color: var(--gray-900);
+      line-height: 1.6;
+      background: #f3f4f6;
+    }
+
+    .page-wrapper {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 30px 20px;
+      position: fixed;
+      width: 280px;
+      height: 100vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .sidebar p {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .nav-section {
+      margin-bottom: 25px;
+    }
+
+    .nav-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 13px;
+      border: none;
+      text-align: left;
+      color: white;
+      font-family: inherit;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: white;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      grid-column: 2;
+      padding: 40px;
+      padding-left: 60px;
+    }
+
+    .section {
+      background: white;
+      padding: 40px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--gray-600);
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: var(--gray-900);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      color: var(--gray-700);
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      color: var(--gray-700);
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--gray-600);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+
+    th {
+      background: var(--gray-100);
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--gray-900);
+      border-bottom: 2px solid var(--gray-200);
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    tr:hover {
+      background: var(--gray-50);
+    }
+
+    /* CODE */
+    code {
+      background: var(--gray-100);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+
+    pre {
+      background: var(--gray-900);
+      color: #10b981;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .highlight {
+      color: #fbbf24;
+    }
+
+    /* GRIDS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: var(--gray-50);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .card h4 {
+      margin-top: 0;
+    }
+
+    .demo-box {
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      border: 1px dashed var(--gray-200);
+      text-align: center;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 12px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+
+    .tag.new {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .tag.expanded {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .tag.core {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    /* LISTS */
+    ul, ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: var(--gray-600);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .stat-box {
+      background: var(--gray-50);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+    }
+
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .color-swatch {
+      padding: 30px 10px;
+      border-radius: 6px;
+      text-align: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-box {
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary) 15%, var(--primary-dark) 85%);
+      color: white;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+
+    .feature-box h4 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .feature-box p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .page-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+      }
+
+      .main-content {
+        grid-column: 1;
+        padding: 20px;
+      }
+
+      .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--gray-600);
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb a {
+      cursor: pointer;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .toc {
+      background: var(--gray-50);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .toc h3 {
+      margin-top: 0;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+    }
+
+    .toc a {
+      cursor: pointer;
+    }
+
+    .comparison-table {
+      font-size: 13px;
+    }
+
+    .comparison-table td {
+      text-align: center;
+    }
+
+    .comparison-table td:first-child {
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .check {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .cross {
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- SIDEBAR NAVIGATION -->
+    <div class="sidebar">
+      <h1>🍵 ChaiCSS</h1>
+      <p>v2.0 Complete Documentation</p>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Getting Started</div>
+        <button class="nav-link active" onclick="showSection('overview')">📌 Overview</button>
+        <button class="nav-link" onclick="showSection('quickstart')">⚡ Quick Start</button>
+        <button class="nav-link" onclick="showSection('installation')">📥 Installation</button>
+        <button class="nav-link" onclick="showSection('whats-new')">✨ What's New</button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Utilities Guide</div>
+        <button class="nav-link" onclick="showSection('spacing')">📏 Spacing</button>
+        <button class="nav-link" onclick="showSection('colors')">🎨 Colors</button>
+        <button class="nav-link" onclick="showSection('typography')">✏️ Typography</button>
+        <button class="nav-link" onclick="showSection('layout')">🔥 Layout</button>
+        <button class="nav-link" onclick="showSection('borders')">🖼️ Borders</button>
+        <button class="nav-link" onclick="showSection('effects')">✨ Effects</button>
+        <button class="nav-link" onclick="showSection('transforms')">🎯 Transforms</button>
+        <button class="nav-link" onclick="showSection('filters')">🎨 Filters</button>
+        <button class="nav-link" onclick="showSection('positioning')">📍 Positioning</button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Reference</div>
+        <button class="nav-link" onclick="showSection('api')">💻 API Reference</button>
+        <button class="nav-link" onclick="showSection('examples')">🏗️ Examples</button>
+        <button class="nav-link" onclick="showSection('faq')">❓ FAQ</button>
+        <button class="nav-link" onclick="showSection('comparison')">📊 Comparison</button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Resources</div>
+        <button class="nav-link" onclick="showSection('stats')">📊 Statistics</button>
+        <button class="nav-link" onclick="showSection('files')">📁 Files</button>
+        <button class="nav-link" onclick="showSection('social')">📱 Social Media</button>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- OVERVIEW SECTION -->
+      <div id="overview" class="section active">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a></div>
+        <h1 class="section-title">🍵 ChaiCSS v2.0</h1>
+        <p class="section-subtitle">400+ Utility-First CSS Framework in Vanilla JavaScript</p>
+
+        <div class="toc">
+          <h3>📚 On This Page</h3>
+          <ul>
+            <li><a onclick="showSection('quickstart')">Quick Start Guide</a></li>
+            <li><a onclick="showSection('whats-new')">What's New in v2.0</a></li>
+            <li><a onclick="showSection('stats')">Statistics</a></li>
+            <li><a onclick="showSection('spacing')">All Utilities</a></li>
+          </ul>
+        </div>
+
+        <h2>Welcome to ChaiCSS!</h2>
+        <p>ChaiCSS is a <strong>lightweight, utility-first CSS framework</strong> written in vanilla JavaScript. Instead of traditional CSS files, you write class names and the engine converts them to inline styles automatically.</p>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-number">400+</div>
+            <div class="stat-label">Utilities</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">25</div>
+            <div class="stat-label">Categories</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">12 KB</div>
+            <div class="stat-label">Size</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Dependencies</div>
+          </div>
+        </div>
+
+        <h2>Why ChaiCSS?</h2>
+        <ul>
+          <li><strong>🚀 Zero Configuration:</strong> Just include the script and start using chai-* classes</li>
+          <li><strong>⚡ Lightweight:</strong> Only 12 KB unminified vs 50+ KB for Tailwind</li>
+          <li><strong>🎯 Utility-First:</strong> Write styles directly in your HTML</li>
+          <li><strong>♻️ Extensible:</strong> Add custom utilities with <code>addUtility()</code></li>
+          <li><strong>👀 SPA-Ready:</strong> Built-in DOM watcher for dynamic elements</li>
+          <li><strong>📚 Well-Documented:</strong> Clear examples and complete reference</li>
+        </ul>
+
+        <h2>Perfect For</h2>
+        <ul>
+          <li>Learning CSS fundamentals</li>
+          <li>Building landing pages</li>
+          <li>Creating admin dashboards</li>
+          <li>Prototyping ideas quickly</li>
+          <li>Small to medium projects</li>
+          <li>Educational purposes</li>
+        </ul>
+
+        <div class="feature-box">
+          <h4>💡 Getting Started</h4>
+          <p>New to ChaiCSS? Start with the <strong><a onclick="showSection('quickstart')" style="color: white; text-decoration: underline;">Quick Start Guide</a></strong> to get up and running in seconds!</p>
+        </div>
+      </div>
+
+      <!-- QUICK START -->
+      <div id="quickstart" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Quick Start</div>
+        <h1 class="section-title">⚡ Quick Start</h1>
+
+        <h2>Get Started in 30 Seconds</h2>
+
+        <h3>Step 1: Include the Script</h3>
+        <pre>&lt;script src="chai-css-engine-v2.js"&gt;&lt;/script&gt;</pre>
+
+        <h3>Step 2: Use chai-* Classes</h3>
+        <pre>&lt;div class="chai-p-4 chai-bg-blue chai-text-white chai-rounded-lg"&gt;
+  Hello, ChaiCSS!
+&lt;/div&gt;</pre>
+
+        <h3>Step 3: Done! ✓</h3>
+        <p>The engine automatically processes your classes on page load. No CSS files, no build tools, no configuration!</p>
+
+        <h2>Common Examples</h2>
+
+        <h3>Button</h3>
+        <pre>&lt;button class="chai-px-6 chai-py-3 chai-bg-blue chai-text-white chai-rounded-md chai-font-semibold chai-shadow-lg chai-cursor-pointer chai-transition chai-duration-300 chai-hover-scale-105"&gt;
+  Click Me
+&lt;/button&gt;</pre>
+
+        <h3>Card</h3>
+        <pre>&lt;div class="chai-p-6 chai-bg-white chai-rounded-lg chai-shadow-lg chai-border chai-border-gray"&gt;
+  &lt;h2 class="chai-text-2xl chai-font-bold chai-mb-4"&gt;Card Title&lt;/h2&gt;
+  &lt;p class="chai-text-gray chai-leading-relaxed"&gt;Card description&lt;/p&gt;
+  &lt;button class="chai-mt-4 chai-px-4 chai-py-2 chai-bg-blue chai-text-white chai-rounded"&gt;Action&lt;/button&gt;
+&lt;/div&gt;</pre>
+
+        <h3>Flexbox Layout</h3>
+        <pre>&lt;div class="chai-flex chai-flex-row chai-gap-4 chai-justify-between"&gt;
+  &lt;div class="chai-flex-1 chai-p-4 chai-bg-red"&gt;Box 1&lt;/div&gt;
+  &lt;div class="chai-flex-1 chai-p-4 chai-bg-green"&gt;Box 2&lt;/div&gt;
+  &lt;div class="chai-flex-1 chai-p-4 chai-bg-blue"&gt;Box 3&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <h3>Grid Layout (NEW!)</h3>
+        <pre>&lt;div class="chai-grid chai-grid-cols-3 chai-gap-6"&gt;
+  &lt;div class="chai-p-4 chai-bg-white chai-rounded-lg chai-shadow"&gt;Card 1&lt;/div&gt;
+  &lt;div class="chai-p-4 chai-bg-white chai-rounded-lg chai-shadow"&gt;Card 2&lt;/div&gt;
+  &lt;div class="chai-p-4 chai-bg-white chai-rounded-lg chai-shadow chai-col-span-3"&gt;Wide Card&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <h3>Animated Element (NEW!)</h3>
+        <pre>&lt;div class="chai-transition chai-duration-300 chai-ease-out chai-scale-110 chai-rotate-45"&gt;
+  Animated element
+&lt;/div&gt;</pre>
+
+        <h2>Most Useful New Utilities (v2.0)</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h4>Grid System</h4>
+            <p><code>chai-grid</code> <code>chai-grid-cols-{1-12}</code> <code>chai-col-span-{1-12}</code></p>
+          </div>
+          <div class="card">
+            <h4>Transitions</h4>
+            <p><code>chai-transition</code> <code>chai-duration-{ms}</code> <code>chai-ease-{type}</code></p>
+          </div>
+          <div class="card">
+            <h4>Transforms</h4>
+            <p><code>chai-scale-{value}</code> <code>chai-rotate-{deg}</code> <code>chai-translate-{x/y}-{px}</code></p>
+          </div>
+          <div class="card">
+            <h4>Filters</h4>
+            <p><code>chai-blur-{size}</code> <code>chai-brightness-{%}</code> <code>chai-contrast-{%}</code></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSTALLATION -->
+      <div id="installation" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Installation</div>
+        <h1 class="section-title">📥 Installation</h1>
+
+        <h2>Option 1: Direct Script Tag (Recommended)</h2>
+        <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Your HTML here --&gt;
+  &lt;div class="chai-p-4 chai-bg-blue chai-text-white"&gt;Hello&lt;/div&gt;
+
+  &lt;!-- Include ChaiCSS at the end of body --&gt;
+  &lt;script src="chai-css-engine-v2.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+        <h2>Option 2: Module Import</h2>
+        <pre>import ChaiCSSEngine from './chai-css-engine-v2.js';</pre>
+
+        <h2>No Build Tools Required!</h2>
+        <p>ChaiCSS works with zero configuration. Just include the script and start using chai-* classes.</p>
+
+        <h2>Verification</h2>
+        <p>Open your browser console (F12) and you should see:</p>
+        <pre>🍵 ChaiCSS Engine initialized with 400+ utilities</pre>
+
+        <h2>File Locations</h2>
+        <table>
+          <tr>
+            <th>File</th>
+            <th>Purpose</th>
+            <th>Size</th>
+          </tr>
+          <tr>
+            <td><code>chai-css-engine-v2.js</code></td>
+            <td>Core library (use this!)</td>
+            <td>12 KB</td>
+          </tr>
+          <tr>
+            <td><code>chai-css-engine.js</code></td>
+            <td>v1.0 version (still works)</td>
+            <td>8 KB</td>
+          </tr>
+          <tr>
+            <td><code>chai-css-demo-v2.html</code></td>
+            <td>Interactive demo</td>
+            <td>N/A</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- WHAT'S NEW -->
+      <div id="whats-new" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / What's New</div>
+        <h1 class="section-title">✨ What's New in v2.0</h1>
+        <p class="section-subtitle">Expanded from 150 to 400+ utilities with 8 new categories</p>
+
+        <h2>Quick Stats</h2>
+        <div class="grid-4">
+          <div class="card">
+            <h4>Utilities</h4>
+            <p><span class="highlight">150 → 400+</span></p>
+            <p style="font-size: 12px; color: #999;">+167% growth</p>
+          </div>
+          <div class="card">
+            <h4>File Size</h4>
+            <p><span class="highlight">8 KB → 12 KB</span></p>
+            <p style="font-size: 12px; color: #999;">+4 KB only</p>
+          </div>
+          <div class="card">
+            <h4>Categories</h4>
+            <p><span class="highlight">15 → 25</span></p>
+            <p style="font-size: 12px; color: #999;">+10 new</p>
+          </div>
+          <div class="card">
+            <h4>Colors</h4>
+            <p><span class="highlight">10 → 40+</span></p>
+            <p style="font-size: 12px; color: #999;">+light/dark variants</p>
+          </div>
+        </div>
+
+        <h2>8 New Categories Added</h2>
+
+        <h3><span class="tag new">NEW</span> Grid Layout System (13 utilities)</h3>
+        <ul>
+          <li><code>chai-grid</code> - Create grid container</li>
+          <li><code>chai-grid-cols-{1-12}</code> - Define columns</li>
+          <li><code>chai-col-span-{1-12}</code> - Span items across columns</li>
+          <li><code>chai-gap-{value}</code> - Space between items</li>
+        </ul>
+
+        <h3><span class="tag new">NEW</span> Transitions & Animations (25+ utilities)</h3>
+        <ul>
+          <li><code>chai-transition</code> - Enable smooth transitions</li>
+          <li><code>chai-duration-{75,100,150,200,300,500,700,1000}</code> - Animation speed</li>
+          <li><code>chai-ease-{linear,in,out,in-out}</code> - Timing functions</li>
+          <li><code>chai-scale-{50,75,100,110,125,150}</code> - Scale transforms</li>
+        </ul>
+
+        <h3><span class="tag new">NEW</span> Filters & Visual Effects (23 utilities)</h3>
+        <ul>
+          <li><code>chai-blur-{sm,md,lg,xl}</code> - Blur effects</li>
+          <li><code>chai-brightness-{50,100,150}</code> - Brightness control</li>
+          <li><code>chai-contrast-{50,100,150}</code> - Contrast adjustment</li>
+          <li><code>chai-grayscale</code>, <code>chai-sepia</code>, <code>chai-invert</code> - Special effects</li>
+        </ul>
+
+        <h3><span class="tag new">NEW</span> Backdrop Filters (8 utilities)</h3>
+        <ul>
+          <li><code>chai-backdrop-blur-{sm,md,lg}</code> - Glass-morphism effect</li>
+          <li><code>chai-backdrop-brightness-{value}</code> - Background dimming</li>
+          <li><code>chai-backdrop-grayscale</code>, <code>chai-backdrop-invert</code> - Background effects</li>
+        </ul>
+
+        <h3><span class="tag new">NEW</span> Text Decoration & Transform (11 utilities)</h3>
+        <ul>
+          <li><code>chai-text-uppercase</code>, <code>chai-text-lowercase</code>, <code>chai-text-capitalize</code></li>
+          <li><code>chai-underline</code>, <code>chai-line-through</code>, <code>chai-italic</code></li>
+          <li>Text styling variants</li>
+        </ul>
+
+        <h3><span class="tag new">NEW</span> Letter Spacing (6 utilities)</h3>
+        <ul>
+          <li><code>chai-tracking-{tighter,tight,normal,wide,wider,widest}</code> - Letter spacing control</li>
+        </ul>
+
+        <h3><span class="tag new">NEW</span> White Space & Word Breaking (9 utilities)</h3>
+        <ul>
+          <li><code>chai-truncate</code> - Ellipsis on overflow</li>
+          <li><code>chai-whitespace-{normal,nowrap,pre}</code> - Whitespace handling</li>
+          <li><code>chai-break-{words,all}</code> - Word breaking</li>
+        </ul>
+
+        <h3><span class="tag new">NEW</span> Background Patterns (7 utilities)</h3>
+        <ul>
+          <li><code>chai-bg-fixed</code>, <code>chai-bg-scroll</code> - Background behavior</li>
+          <li><code>chai-bg-clip-{border,padding,content,text}</code> - Clipping modes</li>
+        </ul>
+
+        <h2><span class="tag expanded">EXPANDED</span> Major Expansions</h2>
+
+        <table class="comparison-table">
+          <tr>
+            <th>Category</th>
+            <th>v1.0</th>
+            <th>v2.0</th>
+            <th>Growth</th>
+          </tr>
+          <tr>
+            <td>Colors - Background</td>
+            <td>10</td>
+            <td>40+</td>
+            <td>+300%</td>
+          </tr>
+          <tr>
+            <td>Colors - Text</td>
+            <td>9</td>
+            <td>40+</td>
+            <td>+344%</td>
+          </tr>
+          <tr>
+            <td>Colors - Border</td>
+            <td>4</td>
+            <td>30+</td>
+            <td>+650%</td>
+          </tr>
+          <tr>
+            <td>Flexbox</td>
+            <td>8</td>
+            <td>30+</td>
+            <td>+275%</td>
+          </tr>
+          <tr>
+            <td>Typography</td>
+            <td>8</td>
+            <td>50+</td>
+            <td>+525%</td>
+          </tr>
+          <tr>
+            <td>Borders</td>
+            <td>7</td>
+            <td>17</td>
+            <td>+143%</td>
+          </tr>
+          <tr>
+            <td>Positioning</td>
+            <td>8</td>
+            <td>20+</td>
+            <td>+150%</td>
+          </tr>
+        </table>
+
+        <h2>Migration from v1.0</h2>
+        <p><strong>✅ Fully backward compatible!</strong> All v1.0 code works with v2.0 without changes.</p>
+        <p>Simply replace the script reference:</p>
+        <pre>&lt;!-- OLD --&gt;
+&lt;script src="chai-css-engine.js"&gt;&lt;/script&gt;
+
+&lt;!-- NEW (same usage, more power!) --&gt;
+&lt;script src="chai-css-engine-v2.js"&gt;&lt;/script&gt;</pre>
+      </div>
+
+      <!-- SPACING -->
+      <div id="spacing" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Spacing</div>
+        <h1 class="section-title">📏 Spacing Utilities</h1>
+
+        <h2>Padding</h2>
+        <p>Add space inside elements.</p>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td><code>chai-p-{value}</code></td>
+            <td>Padding all sides (px)</td>
+            <td><code>chai-p-4</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-px-{value}</code></td>
+            <td>Padding left & right (px)</td>
+            <td><code>chai-px-8</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-py-{value}</code></td>
+            <td>Padding top & bottom (px)</td>
+            <td><code>chai-py-4</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-pt-{value}</code></td>
+            <td>Padding top only</td>
+            <td><code>chai-pt-2</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-pb-{value}</code></td>
+            <td>Padding bottom only</td>
+            <td><code>chai-pb-2</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-pl-{value}</code></td>
+            <td>Padding left only</td>
+            <td><code>chai-pl-4</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-pr-{value}</code></td>
+            <td>Padding right only</td>
+            <td><code>chai-pr-4</code></td>
+          </tr>
+        </table>
+
+        <h2>Margin</h2>
+        <p>Add space outside elements.</p>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td><code>chai-m-{value}</code></td>
+            <td>Margin all sides (px)</td>
+            <td><code>chai-m-2</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-mx-{value}</code></td>
+            <td>Margin left & right (px)</td>
+            <td><code>chai-mx-auto</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-my-{value}</code></td>
+            <td>Margin top & bottom (px)</td>
+            <td><code>chai-my-4</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-mt-{value}</code></td>
+            <td>Margin top only</td>
+            <td><code>chai-mt-4</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-mb-{value}</code></td>
+            <td>Margin bottom only</td>
+            <td><code>chai-mb-2</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-ml-{value}</code></td>
+            <td>Margin left only</td>
+            <td><code>chai-ml-4</code></td>
+          </tr>
+          <tr>
+            <td><code>chai-mr-{value}</code></td>
+            <td>Margin right only</td>
+            <td><code>chai-mr-4</code></td>
+          </tr>
+        </table>
+
+        <h2>Examples</h2>
+        <h3>Basic Spacing</h3>
+        <pre>&lt;div class="chai-p-4 chai-m-2"&gt;Padded and margined&lt;/div&gt;</pre>
+
+        <h3>Directional Spacing</h3>
+        <pre>&lt;div class="chai-px-8 chai-py-4"&gt;Horizontal 8px, vertical 4px&lt;/div&gt;</pre>
+
+        <h3>Center with Margin</h3>
+        <pre>&lt;div class="chai-mx-auto chai-w-400"&gt;Centered div&lt;/div&gt;</pre>
+      </div>
+
+      <!-- COLORS -->
+      <div id="colors" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Colors</div>
+        <h1 class="section-title">🎨 Colors (40+ Options)</h1>
+        <p class="section-subtitle"><span class="tag expanded">EXPANDED</span> Now includes light and dark variants!</p>
+
+        <h2>Background Colors</h2>
+        <div class="color-palette">
+          <div class="color-swatch" style="background-color: #EF4444;">Red</div>
+          <div class="color-swatch" style="background-color: #F97316;">Orange</div>
+          <div class="color-swatch" style="background-color: #FBBF24;">Yellow</div>
+          <div class="color-swatch" style="background-color: #10B981;">Green</div>
+          <div class="color-swatch" style="background-color: #06B6D4;">Cyan</div>
+          <div class="color-swatch" style="background-color: #3B82F6;">Blue</div>
+          <div class="color-swatch" style="background-color: #8B5CF6;">Purple</div>
+          <div class="color-swatch" style="background-color: #EC4899;">Pink</div>
+        </div>
+
+        <h2>Color Variants (NEW!)</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Color</th>
+            <th>Hex</th>
+          </tr>
+          <tr>
+            <td><code>chai-bg-red</code></td>
+            <td>Red</td>
+            <td>#EF4444</td>
+          </tr>
+          <tr>
+            <td><code>chai-bg-red-light</code></td>
+            <td>Light Red</td>
+            <td>#FCA5A5</td>
+          </tr>
+          <tr>
+            <td><code>chai-bg-red-dark</code></td>
+            <td>Dark Red</td>
+            <td>#991B1B</td>
+          </tr>
+          <tr>
+            <td><code>chai-bg-blue</code></td>
+            <td>Blue</td>
+            <td>#3B82F6</td>
+          </tr>
+          <tr>
+            <td><code>chai-bg-blue-light</code></td>
+            <td>Light Blue</td>
+            <td>#BFDBFE</td>
+          </tr>
+          <tr>
+            <td><code>chai-bg-blue-dark</code></td>
+            <td>Dark Blue</td>
+            <td>#1E40AF</td>
+          </tr>
+        </table>
+
+        <h2>Text Colors</h2>
+        <p>Use <code>chai-text-{color}</code> for text colors. All background colors work with text too!</p>
+        <pre>&lt;p class="chai-text-blue"&gt;Blue text&lt;/p&gt;
+&lt;p class="chai-text-red-light"&gt;Light red text&lt;/p&gt;
+&lt;p class="chai-text-purple-dark"&gt;Dark purple text&lt;/p&gt;</pre>
+
+        <h2>Border Colors</h2>
+        <p>Use <code>chai-border-{color}</code> for border colors.</p>
+        <pre>&lt;div class="chai-border chai-border-blue"&gt;Blue border&lt;/div&gt;
+&lt;div class="chai-border-4 chai-border-green"&gt;Green thick border&lt;/div&gt;</pre>
+
+        <h2>Available Colors</h2>
+        <ul>
+          <li>Slate, Gray, Zinc, Neutral, Stone (neutrals)</li>
+          <li>Red, Orange, Amber, Yellow, Lime, Green, Emerald, Teal, Cyan, Sky, Blue, Indigo, Purple, Fuchsia, Pink, Rose</li>
+          <li>White, Black, Transparent</li>
+          <li>Each color has light and dark variants</li>
+        </ul>
+      </div>
+
+      <!-- TYPOGRAPHY -->
+      <div id="typography" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Typography</div>
+        <h1 class="section-title">✏️ Typography (50+ Utilities)</h1>
+        <p class="section-subtitle"><span class="tag expanded">EXPANDED</span> From 8 to 50+ options</p>
+
+        <h2>Font Sizes (XS to 8XL)</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Size</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td><code>chai-text-xs</code></td>
+            <td>12px</td>
+            <td><span style="font-size: 12px;">Extra small</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-text-sm</code></td>
+            <td>14px</td>
+            <td><span style="font-size: 14px;">Small</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-text-base</code></td>
+            <td>16px</td>
+            <td><span style="font-size: 16px;">Base (default)</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-text-lg</code></td>
+            <td>18px</td>
+            <td><span style="font-size: 18px;">Large</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-text-2xl</code></td>
+            <td>24px</td>
+            <td><span style="font-size: 24px;">2XL</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-text-4xl</code></td>
+            <td>36px</td>
+            <td><span style="font-size: 36px;">4XL</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-text-8xl</code></td>
+            <td>96px</td>
+            <td><span style="font-size: 32px;">8XL</span></td>
+          </tr>
+        </table>
+
+        <h2>Font Weights</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Weight</th>
+          </tr>
+          <tr>
+            <td><code>chai-font-thin</code></td>
+            <td><span style="font-weight: 100;">100 - Thin</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-font-light</code></td>
+            <td><span style="font-weight: 300;">300 - Light</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-font-normal</code></td>
+            <td><span style="font-weight: 400;">400 - Normal</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-font-semibold</code></td>
+            <td><span style="font-weight: 600;">600 - Semibold</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-font-bold</code></td>
+            <td><span style="font-weight: 700;">700 - Bold</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-font-black</code></td>
+            <td><span style="font-weight: 900;">900 - Black</span></td>
+          </tr>
+        </table>
+
+        <h2>Text Alignment</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-text-left</code></td>
+            <td>Align text to left</td>
+          </tr>
+          <tr>
+            <td><code>chai-text-center</code></td>
+            <td>Center text</td>
+          </tr>
+          <tr>
+            <td><code>chai-text-right</code></td>
+            <td>Align text to right</td>
+          </tr>
+          <tr>
+            <td><code>chai-text-justify</code></td>
+            <td>Justify text</td>
+          </tr>
+        </table>
+
+        <h2>Line Height & Spacing (NEW!)</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-leading-tight</code></td>
+            <td>Tight line spacing (1.25)</td>
+          </tr>
+          <tr>
+            <td><code>chai-leading-normal</code></td>
+            <td>Normal line spacing (1.5)</td>
+          </tr>
+          <tr>
+            <td><code>chai-leading-relaxed</code></td>
+            <td>Relaxed line spacing (1.625)</td>
+          </tr>
+          <tr>
+            <td><code>chai-leading-loose</code></td>
+            <td>Loose line spacing (2)</td>
+          </tr>
+          <tr>
+            <td><code>chai-tracking-tight</code></td>
+            <td>Tight letter spacing</td>
+          </tr>
+          <tr>
+            <td><code>chai-tracking-normal</code></td>
+            <td>Normal letter spacing</td>
+          </tr>
+          <tr>
+            <td><code>chai-tracking-wide</code></td>
+            <td>Wide letter spacing</td>
+          </tr>
+          <tr>
+            <td><code>chai-tracking-widest</code></td>
+            <td>Widest letter spacing</td>
+          </tr>
+        </table>
+
+        <h2>Text Transform & Decoration (NEW!)</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-text-uppercase</code></td>
+            <td>CONVERT TEXT TO UPPERCASE</td>
+          </tr>
+          <tr>
+            <td><code>chai-text-lowercase</code></td>
+            <td>convert text to lowercase</td>
+          </tr>
+          <tr>
+            <td><code>chai-text-capitalize</code></td>
+            <td>Capitalize First Letter</td>
+          </tr>
+          <tr>
+            <td><code>chai-italic</code></td>
+            <td><span style="font-style: italic;">Italicized text</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-underline</code></td>
+            <td><span style="text-decoration: underline;">Underlined text</span></td>
+          </tr>
+          <tr>
+            <td><code>chai-line-through</code></td>
+            <td><span style="text-decoration: line-through;">Strikethrough text</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- LAYOUT -->
+      <div id="layout" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Layout</div>
+        <h1 class="section-title">🔥 Layout (Flexbox & Grid)</h1>
+
+        <h2>Flexbox (30+ Utilities) <span class="tag expanded">EXPANDED</span></h2>
+
+        <h3>Create Flex Container</h3>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-flex</code></td>
+            <td>display: flex</td>
+          </tr>
+          <tr>
+            <td><code>chai-flex-row</code></td>
+            <td>Flex row (horizontal)</td>
+          </tr>
+          <tr>
+            <td><code>chai-flex-col</code></td>
+            <td>Flex column (vertical)</td>
+          </tr>
+          <tr>
+            <td><code>chai-flex-wrap</code></td>
+            <td>Wrap items to next line</td>
+          </tr>
+        </table>
+
+        <h3>Justify Content (Horizontal Alignment)</h3>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-justify-start</code></td>
+            <td>Align to start (flex-start)</td>
+          </tr>
+          <tr>
+            <td><code>chai-justify-center</code></td>
+            <td>Center items</td>
+          </tr>
+          <tr>
+            <td><code>chai-justify-end</code></td>
+            <td>Align to end (flex-end)</td>
+          </tr>
+          <tr>
+            <td><code>chai-justify-between</code></td>
+            <td>Space between items</td>
+          </tr>
+          <tr>
+            <td><code>chai-justify-around</code></td>
+            <td>Space around items</td>
+          </tr>
+        </table>
+
+        <h3>Align Items (Vertical Alignment)</h3>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-items-start</code></td>
+            <td>Align to top</td>
+          </tr>
+          <tr>
+            <td><code>chai-items-center</code></td>
+            <td>Center vertically</td>
+          </tr>
+          <tr>
+            <td><code>chai-items-end</code></td>
+            <td>Align to bottom</td>
+          </tr>
+          <tr>
+            <td><code>chai-items-stretch</code></td>
+            <td>Stretch to fill</td>
+          </tr>
+        </table>
+
+        <h3>Gap (Spacing)</h3>
+        <pre><code>chai-gap-{value}</code> - Adds space between flex items</pre>
+        <pre>&lt;div class="chai-flex chai-gap-4"&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <h2>Grid System (13 Utilities) <span class="tag new">NEW</span></h2>
+
+        <h3>Create Grid Container</h3>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-grid</code></td>
+            <td>display: grid</td>
+          </tr>
+          <tr>
+            <td><code>chai-grid-cols-{1-12}</code></td>
+            <td>Define number of columns</td>
+          </tr>
+          <tr>
+            <td><code>chai-gap-{value}</code></td>
+            <td>Space between grid items</td>
+          </tr>
+        </table>
+
+        <h3>Grid Item Spanning</h3>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-col-span-{1-12}</code></td>
+            <td>Span columns</td>
+          </tr>
+          <tr>
+            <td><code>chai-row-span-{value}</code></td>
+            <td>Span rows</td>
+          </tr>
+        </table>
+
+        <h2>Examples</h2>
+
+        <h3>Centered Flexbox</h3>
+        <pre>&lt;div class="chai-flex chai-justify-center chai-items-center chai-gap-4"&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <h3>3-Column Grid</h3>
+        <pre>&lt;div class="chai-grid chai-grid-cols-3 chai-gap-6"&gt;
+  &lt;div&gt;Card 1&lt;/div&gt;
+  &lt;div&gt;Card 2&lt;/div&gt;
+  &lt;div&gt;Card 3&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <h3>Responsive Grid (with Flex)</h3>
+        <pre>&lt;div class="chai-flex chai-flex-wrap chai-gap-4"&gt;
+  &lt;div class="chai-flex-1"&gt;Flexible item&lt;/div&gt;
+  &lt;div class="chai-flex-1"&gt;Flexible item&lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+
+      <!-- BORDERS -->
+      <div id="borders" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Borders</div>
+        <h1 class="section-title">🖼️ Borders & Effects</h1>
+
+        <h2>Border Width</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-border</code></td>
+            <td>1px border all sides</td>
+          </tr>
+          <tr>
+            <td><code>chai-border-2</code></td>
+            <td>2px border</td>
+          </tr>
+          <tr>
+            <td><code>chai-border-4</code></td>
+            <td>4px border</td>
+          </tr>
+        </table>
+
+        <h2>Border Sides</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-border-t</code></td>
+            <td>Top border only</td>
+          </tr>
+          <tr>
+            <td><code>chai-border-b</code></td>
+            <td>Bottom border only</td>
+          </tr>
+          <tr>
+            <td><code>chai-border-l</code></td>
+            <td>Left border only</td>
+          </tr>
+          <tr>
+            <td><code>chai-border-r</code></td>
+            <td>Right border only</td>
+          </tr>
+        </table>
+
+        <h2>Border Radius (Rounded Corners)</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Radius</th>
+          </tr>
+          <tr>
+            <td><code>chai-rounded</code></td>
+            <td>4px</td>
+          </tr>
+          <tr>
+            <td><code>chai-rounded-md</code></td>
+            <td>8px</td>
+          </tr>
+          <tr>
+            <td><code>chai-rounded-lg</code></td>
+            <td>12px</td>
+          </tr>
+          <tr>
+            <td><code>chai-rounded-xl</code></td>
+            <td>16px</td>
+          </tr>
+          <tr>
+            <td><code>chai-rounded-full</code></td>
+            <td>9999px (circle)</td>
+          </tr>
+        </table>
+
+        <h2>Box Shadows</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-shadow-sm</code></td>
+            <td>Small shadow</td>
+          </tr>
+          <tr>
+            <td><code>chai-shadow-md</code></td>
+            <td>Medium shadow</td>
+          </tr>
+          <tr>
+            <td><code>chai-shadow-lg</code></td>
+            <td>Large shadow</td>
+          </tr>
+          <tr>
+            <td><code>chai-shadow-xl</code></td>
+            <td>Extra large shadow</td>
+          </tr>
+        </table>
+
+        <h2>Opacity</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Opacity</th>
+          </tr>
+          <tr>
+            <td><code>chai-opacity-0</code></td>
+            <td>0% (invisible)</td>
+          </tr>
+          <tr>
+            <td><code>chai-opacity-25</code></td>
+            <td>25%</td>
+          </tr>
+          <tr>
+            <td><code>chai-opacity-50</code></td>
+            <td>50%</td>
+          </tr>
+          <tr>
+            <td><code>chai-opacity-75</code></td>
+            <td>75%</td>
+          </tr>
+          <tr>
+            <td><code>chai-opacity-100</code></td>
+            <td>100% (fully visible)</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- EFFECTS -->
+      <div id="effects" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Effects</div>
+        <h1 class="section-title">✨ Effects & Interactions</h1>
+
+        <h2>Display</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-block</code></td>
+            <td>display: block</td>
+          </tr>
+          <tr>
+            <td><code>chai-inline</code></td>
+            <td>display: inline</td>
+          </tr>
+          <tr>
+            <td><code>chai-inline-block</code></td>
+            <td>display: inline-block</td>
+          </tr>
+          <tr>
+            <td><code>chai-flex</code></td>
+            <td>display: flex</td>
+          </tr>
+          <tr>
+            <td><code>chai-grid</code></td>
+            <td>display: grid</td>
+          </tr>
+          <tr>
+            <td><code>chai-hidden</code></td>
+            <td>display: none (hidden)</td>
+          </tr>
+        </table>
+
+        <h2>Cursor & Interaction</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-cursor-pointer</code></td>
+            <td>Pointer cursor (clickable)</td>
+          </tr>
+          <tr>
+            <td><code>chai-cursor-default</code></td>
+            <td>Default cursor</td>
+          </tr>
+          <tr>
+            <td><code>chai-cursor-not-allowed</code></td>
+            <td>Disabled cursor</td>
+          </tr>
+          <tr>
+            <td><code>chai-pointer-events-none</code></td>
+            <td>Not clickable</td>
+          </tr>
+          <tr>
+            <td><code>chai-pointer-events-auto</code></td>
+            <td>Clickable</td>
+          </tr>
+        </table>
+
+        <h2>Overflow</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-overflow-auto</code></td>
+            <td>Scroll if needed</td>
+          </tr>
+          <tr>
+            <td><code>chai-overflow-hidden</code></td>
+            <td>Hide overflow</td>
+          </tr>
+          <tr>
+            <td><code>chai-overflow-visible</code></td>
+            <td>Show overflow</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- TRANSFORMS -->
+      <div id="transforms" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Transforms</div>
+        <h1 class="section-title">🎯 Transforms (NEW!) <span class="tag new">NEW</span></h1>
+
+        <h2>Scale</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Scale</th>
+          </tr>
+          <tr>
+            <td><code>chai-scale-50</code></td>
+            <td>50%</td>
+          </tr>
+          <tr>
+            <td><code>chai-scale-75</code></td>
+            <td>75%</td>
+          </tr>
+          <tr>
+            <td><code>chai-scale-100</code></td>
+            <td>100% (normal)</td>
+          </tr>
+          <tr>
+            <td><code>chai-scale-110</code></td>
+            <td>110%</td>
+          </tr>
+          <tr>
+            <td><code>chai-scale-125</code></td>
+            <td>125%</td>
+          </tr>
+          <tr>
+            <td><code>chai-scale-150</code></td>
+            <td>150%</td>
+          </tr>
+        </table>
+
+        <h2>Rotate</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Rotation</th>
+          </tr>
+          <tr>
+            <td><code>chai-rotate-0</code></td>
+            <td>0 degrees</td>
+          </tr>
+          <tr>
+            <td><code>chai-rotate-45</code></td>
+            <td>45 degrees</td>
+          </tr>
+          <tr>
+            <td><code>chai-rotate-90</code></td>
+            <td>90 degrees</td>
+          </tr>
+          <tr>
+            <td><code>chai-rotate-180</code></td>
+            <td>180 degrees</td>
+          </tr>
+          <tr>
+            <td><code>-chai-rotate-45</code></td>
+            <td>-45 degrees</td>
+          </tr>
+        </table>
+
+        <h2>Translate</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-translate-x-{value}</code></td>
+            <td>Move along X axis</td>
+          </tr>
+          <tr>
+            <td><code>chai-translate-y-{value}</code></td>
+            <td>Move along Y axis</td>
+          </tr>
+          <tr>
+            <td><code>chai-skew-x-{value}</code></td>
+            <td>Skew on X axis</td>
+          </tr>
+          <tr>
+            <td><code>chai-skew-y-{value}</code></td>
+            <td>Skew on Y axis</td>
+          </tr>
+        </table>
+
+        <h2>Examples</h2>
+        <pre>&lt;div class="chai-scale-110"&gt;Scaled 110%&lt;/div&gt;
+&lt;div class="chai-rotate-45"&gt;Rotated 45 degrees&lt;/div&gt;
+&lt;div class="chai-translate-x-10"&gt;Moved 10px right&lt;/div&gt;</pre>
+      </div>
+
+      <!-- FILTERS -->
+      <div id="filters" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Filters</div>
+        <h1 class="section-title">🎨 Filters & Effects (NEW!) <span class="tag new">NEW</span></h1>
+
+        <h2>Blur</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Blur Amount</th>
+          </tr>
+          <tr>
+            <td><code>chai-blur-none</code></td>
+            <td>0px</td>
+          </tr>
+          <tr>
+            <td><code>chai-blur-sm</code></td>
+            <td>4px</td>
+          </tr>
+          <tr>
+            <td><code>chai-blur-md</code></td>
+            <td>8px</td>
+          </tr>
+          <tr>
+            <td><code>chai-blur-lg</code></td>
+            <td>16px</td>
+          </tr>
+          <tr>
+            <td><code>chai-blur-xl</code></td>
+            <td>24px</td>
+          </tr>
+        </table>
+
+        <h2>Brightness</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Level</th>
+          </tr>
+          <tr>
+            <td><code>chai-brightness-50</code></td>
+            <td>50% (darkened)</td>
+          </tr>
+          <tr>
+            <td><code>chai-brightness-100</code></td>
+            <td>100% (normal)</td>
+          </tr>
+          <tr>
+            <td><code>chai-brightness-150</code></td>
+            <td>150% (brightened)</td>
+          </tr>
+        </table>
+
+        <h2>Contrast</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Level</th>
+          </tr>
+          <tr>
+            <td><code>chai-contrast-50</code></td>
+            <td>50% (low contrast)</td>
+          </tr>
+          <tr>
+            <td><code>chai-contrast-100</code></td>
+            <td>100% (normal)</td>
+          </tr>
+          <tr>
+            <td><code>chai-contrast-150</code></td>
+            <td>150% (high contrast)</td>
+          </tr>
+        </table>
+
+        <h2>Special Effects</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-grayscale</code></td>
+            <td>Convert to grayscale</td>
+          </tr>
+          <tr>
+            <td><code>chai-grayscale-0</code></td>
+            <td>No grayscale</td>
+          </tr>
+          <tr>
+            <td><code>chai-invert</code></td>
+            <td>Invert colors</td>
+          </tr>
+          <tr>
+            <td><code>chai-sepia</code></td>
+            <td>Apply sepia tone</td>
+          </tr>
+          <tr>
+            <td><code>chai-saturate-{50,100,150}</code></td>
+            <td>Adjust saturation</td>
+          </tr>
+        </table>
+
+        <h2>Backdrop Filters (NEW!) - Glassmorphism</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-backdrop-blur-sm</code></td>
+            <td>4px blur background</td>
+          </tr>
+          <tr>
+            <td><code>chai-backdrop-blur-md</code></td>
+            <td>8px blur background</td>
+          </tr>
+          <tr>
+            <td><code>chai-backdrop-blur-lg</code></td>
+            <td>16px blur background</td>
+          </tr>
+          <tr>
+            <td><code>chai-backdrop-brightness-{%}</code></td>
+            <td>Adjust background brightness</td>
+          </tr>
+          <tr>
+            <td><code>chai-backdrop-grayscale</code></td>
+            <td>Grayscale background</td>
+          </tr>
+        </table>
+
+        <h2>Examples</h2>
+        <pre>&lt;img class="chai-blur-md chai-brightness-110 chai-contrast-125"&gt;
+
+&lt;div class="chai-backdrop-blur-lg chai-bg-white chai-opacity-90"&gt;
+  Frosted glass effect
+&lt;/div&gt;</pre>
+      </div>
+
+      <!-- POSITIONING -->
+      <div id="positioning" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Utilities / Positioning</div>
+        <h1 class="section-title">📍 Positioning & Layout</h1>
+
+        <h2>Position Type</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-static</code></td>
+            <td>Default position</td>
+          </tr>
+          <tr>
+            <td><code>chai-relative</code></td>
+            <td>Position relative to element</td>
+          </tr>
+          <tr>
+            <td><code>chai-absolute</code></td>
+            <td>Position relative to parent</td>
+          </tr>
+          <tr>
+            <td><code>chai-fixed</code></td>
+            <td>Position relative to viewport</td>
+          </tr>
+          <tr>
+            <td><code>chai-sticky</code></td>
+            <td>Sticky positioning</td>
+          </tr>
+        </table>
+
+        <h2>Position Values</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Effect</th>
+          </tr>
+          <tr>
+            <td><code>chai-top-{value}</code></td>
+            <td>Distance from top (px)</td>
+          </tr>
+          <tr>
+            <td><code>chai-bottom-{value}</code></td>
+            <td>Distance from bottom (px)</td>
+          </tr>
+          <tr>
+            <td><code>chai-left-{value}</code></td>
+            <td>Distance from left (px)</td>
+          </tr>
+          <tr>
+            <td><code>chai-right-{value}</code></td>
+            <td>Distance from right (px)</td>
+          </tr>
+          <tr>
+            <td><code>chai-inset-{value}</code></td>
+            <td>All sides at once</td>
+          </tr>
+        </table>
+
+        <h2>Z-Index (Layering)</h2>
+        <table>
+          <tr>
+            <th>Utility</th>
+            <th>Z-Index</th>
+          </tr>
+          <tr>
+            <td><code>chai-z-0</code></td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td><code>chai-z-10</code></td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td><code>chai-z-20</code></td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td><code>chai-z-30</code></td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <td><code>chai-z-40</code></td>
+            <td>40</td>
+          </tr>
+          <tr>
+            <td><code>chai-z-50</code></td>
+            <td>50</td>
+          </tr>
+        </table>
+
+        <h2>Examples</h2>
+        <pre>&lt;!-- Floating Action Button --&gt;
+&lt;button class="chai-fixed chai-bottom-6 chai-right-6 chai-z-50"&gt;
+  Floating button
+&lt;/button&gt;
+
+&lt;!-- Sticky Header --&gt;
+&lt;header class="chai-sticky chai-top-0 chai-z-40"&gt;
+  Navigation
+&lt;/header&gt;
+
+&lt;!-- Absolutely Positioned --&gt;
+&lt;div class="chai-relative"&gt;
+  &lt;div class="chai-absolute chai-top-4 chai-right-4"&gt;
+    Badge
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+
+      <!-- API REFERENCE -->
+      <div id="api" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Reference / API</div>
+        <h1 class="section-title">💻 API Reference</h1>
+
+        <h2>Core Methods</h2>
+
+        <h3>process()</h3>
+        <p>Process all elements with chai-* classes in the DOM.</p>
+        <pre>window.chaiCSS.process();
+// Returns: number of processed style declarations</pre>
+
+        <h3>addUtility(name, styleFunction)</h3>
+        <p>Add custom utilities to the engine.</p>
+        <pre>// Simple utility
+window.chaiCSS.addUtility('my-custom', () => ({
+  color: '#ff1493'
+}));
+
+// Parametric utility
+window.chaiCSS.addUtility('my-shadow', (value) => ({
+  boxShadow: `0 ${value}px ${value * 2}px rgba(0,0,0,0.2)`
+}));
+
+// Usage in HTML:
+// &lt;div class="chai-my-custom"&gt;Pink text&lt;/div&gt;
+// &lt;div class="chai-my-shadow-5"&gt;Shadow 5px&lt;/div&gt;</pre>
+
+        <h3>removeChaiClasses()</h3>
+        <p>Remove all chai-* classes from elements after applying styles.</p>
+        <pre>window.chaiCSS.removeChaiClasses();</pre>
+
+        <h3>watch()</h3>
+        <p>Watch for new elements added to the DOM (useful for SPAs).</p>
+        <pre>const observer = window.chaiCSS.watch();
+// Now new elements with chai-* classes will be automatically styled</pre>
+
+        <h3>getStats()</h3>
+        <p>Get statistics about available utilities.</p>
+        <pre>const stats = window.chaiCSS.getStats();
+console.log(stats.totalUtilities); // 400+
+console.log(stats.utilities); // Array of all utility names</pre>
+
+        <h2>Usage Examples</h2>
+
+        <h3>Basic Usage</h3>
+        <pre>&lt;script src="chai-css-engine-v2.js"&gt;&lt;/script&gt;
+
+&lt;div class="chai-p-4 chai-bg-blue chai-text-white"&gt;
+  Styled with ChaiCSS
+&lt;/div&gt;</pre>
+
+        <h3>Custom Utilities</h3>
+        <pre>// Add a gradient utility
+window.chaiCSS.addUtility('gradient-sunset', () => ({
+  background: 'linear-gradient(135deg, #ff6b6b, #feca57)',
+  color: 'white'
+}));
+
+// Use it
+// &lt;div class="chai-gradient-sunset"&gt;Sunset gradient&lt;/div&gt;</pre>
+
+        <h3>SPA Integration</h3>
+        <pre>// Start watching for new elements
+window.chaiCSS.watch();
+
+// Now when you add new elements dynamically:
+const newDiv = document.createElement('div');
+newDiv.className = 'chai-p-4 chai-bg-blue chai-rounded-lg';
+document.body.appendChild(newDiv);
+
+// It's automatically styled!</pre>
+
+        <h3>Manual Processing</h3>
+        <pre>// Process elements manually
+const count = window.chaiCSS.process();
+console.log(`Processed ${count} style declarations`);</pre>
+      </div>
+
+      <!-- EXAMPLES -->
+      <div id="examples" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Reference / Examples</div>
+        <h1 class="section-title">🏗️ Real-World Examples</h1>
+
+        <h2>Modern Button</h2>
+        <pre>&lt;button class="chai-px-6 chai-py-3 chai-bg-blue chai-text-white chai-rounded-lg chai-font-semibold chai-shadow-lg chai-cursor-pointer chai-transition chai-duration-300 chai-hover-scale-105 chai-hover-shadow-xl"&gt;
+  Click Me
+&lt;/button&gt;</pre>
+
+        <h2>Card Component</h2>
+        <pre>&lt;div class="chai-p-6 chai-bg-white chai-rounded-lg chai-shadow-lg chai-border chai-border-gray"&gt;
+  &lt;h2 class="chai-text-2xl chai-font-bold chai-text-gray-900 chai-mb-4"&gt;
+    Card Title
+  &lt;/h2&gt;
+  &lt;p class="chai-text-gray chai-leading-relaxed chai-mb-6"&gt;
+    Card description goes here
+  &lt;/p&gt;
+  &lt;button class="chai-px-4 chai-py-2 chai-bg-blue chai-text-white chai-rounded chai-cursor-pointer"&gt;
+    Action
+  &lt;/button&gt;
+&lt;/div&gt;</pre>
+
+        <h2>Navigation Bar</h2>
+        <pre>&lt;nav class="chai-flex chai-justify-between chai-items-center chai-p-4 chai-bg-white chai-shadow-md chai-sticky chai-top-0 chai-z-50"&gt;
+  &lt;div class="chai-text-2xl chai-font-bold chai-text-blue"&gt;Logo&lt;/div&gt;
+  &lt;div class="chai-flex chai-gap-8"&gt;
+    &lt;a href="#" class="chai-text-gray chai-hover-text-blue chai-transition"&gt;Home&lt;/a&gt;
+    &lt;a href="#" class="chai-text-gray chai-hover-text-blue chai-transition"&gt;About&lt;/a&gt;
+    &lt;a href="#" class="chai-text-gray chai-hover-text-blue chai-transition"&gt;Contact&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+
+        <h2>3-Column Grid</h2>
+        <pre>&lt;div class="chai-grid chai-grid-cols-3 chai-gap-6 chai-p-6"&gt;
+  &lt;div class="chai-p-4 chai-bg-white chai-rounded-lg chai-shadow"&gt;
+    &lt;h3 class="chai-font-bold chai-mb-2"&gt;Item 1&lt;/h3&gt;
+    &lt;p&gt;Description&lt;/p&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="chai-p-4 chai-bg-white chai-rounded-lg chai-shadow"&gt;
+    &lt;h3 class="chai-font-bold chai-mb-2"&gt;Item 2&lt;/h3&gt;
+    &lt;p&gt;Description&lt;/p&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="chai-p-4 chai-bg-white chai-rounded-lg chai-shadow"&gt;
+    &lt;h3 class="chai-font-bold chai-mb-2"&gt;Item 3&lt;/h3&gt;
+    &lt;p&gt;Description&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <h2>Glassmorphism Card</h2>
+        <pre>&lt;div class="chai-backdrop-blur-lg chai-bg-white chai-opacity-90 chai-p-6 chai-rounded-xl chai-shadow-lg"&gt;
+  &lt;h2 class="chai-text-2xl chai-font-bold chai-mb-4"&gt;Glass Card&lt;/h2&gt;
+  &lt;p class="chai-text-gray chai-leading-relaxed"&gt;
+    Frosted glass effect with modern design
+  &lt;/p&gt;
+&lt;/div&gt;</pre>
+
+        <h2>Image with Filters</h2>
+        <pre>&lt;img 
+  src="image.jpg" 
+  class="chai-w-full chai-rounded-lg chai-shadow-lg chai-blur-0 chai-brightness-100 chai-contrast-100 chai-transition chai-duration-300 chai-hover-blur-sm chai-hover-brightness-110 chai-hover-contrast-125"&gt;</pre>
+
+        <h2>Animated Container</h2>
+        <pre>&lt;div class="chai-p-6 chai-bg-gradient-purple chai-text-white chai-rounded-lg chai-transition chai-duration-500 chai-ease-out chai-scale-100 chai-hover-scale-105"&gt;
+  Hover to animate!
+&lt;/div&gt;</pre>
+      </div>
+
+      <!-- FAQ -->
+      <div id="faq" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Reference / FAQ</div>
+        <h1 class="section-title">❓ Frequently Asked Questions</h1>
+
+        <h2>General Questions</h2>
+
+        <h3>Q: Can I use ChaiCSS in production?</h3>
+        <p>A: Yes! ChaiCSS is production-ready. It's lightweight (12 KB), has no dependencies, and works in all modern browsers.</p>
+
+        <h3>Q: Do I need a build tool or npm?</h3>
+        <p>A: No! ChaiCSS is a drop-in script. Just include it with a <code>&lt;script&gt;</code> tag and you're good to go.</p>
+
+        <h3>Q: Does it work with React/Vue/Svelte?</h3>
+        <p>A: Yes! Use the <code>className</code> prop in React or the <code>class</code> attribute in Vue/Svelte. ChaiCSS works with any framework.</p>
+
+        <h3>Q: How is v2.0 different from v1.0?</h3>
+        <p>A: v2.0 has 400+ utilities (vs 150), includes Grid system, transforms, filters, and backdrop effects. All v1.0 code still works!</p>
+
+        <h2>Usage Questions</h2>
+
+        <h3>Q: What value should I use for padding/margin?</h3>
+        <p>A: Use any number (in pixels): <code>chai-p-2</code>, <code>chai-p-4</code>, <code>chai-p-8</code>, <code>chai-p-100</code>, etc.</p>
+
+        <h3>Q: Can I use custom colors?</h3>
+        <p>A: ChaiCSS comes with 40+ colors. To add custom colors, use the <code>addUtility()</code> method.</p>
+
+        <h3>Q: How do I center a container?</h3>
+        <p>A: Use <code>chai-mx-auto</code> with a fixed width: <code>&lt;div class="chai-mx-auto chai-w-600"&gt;</code></p>
+
+        <h3>Q: How do I hide an element?</h3>
+        <p>A: Use <code>chai-hidden</code> for <code>display: none</code> or <code>chai-opacity-0</code> for invisible but taking space.</p>
+
+        <h2>Performance Questions</h2>
+
+        <h3>Q: How fast is ChaiCSS?</h3>
+        <p>A: Very fast! DOM processing is <1ms per element. Inline styles apply instantly.</p>
+
+        <h3>Q: Does it affect page load time?</h3>
+        <p>A: No. The 12 KB script loads asynchronously. Processing happens after page load, so no visible impact.</p>
+
+        <h3>Q: Can I minify it for production?</h3>
+        <p>A: Yes! The minified version is ~5 KB, making it even lighter.</p>
+
+        <h2>Compatibility Questions</h2>
+
+        <h3>Q: What browsers does ChaiCSS support?</h3>
+        <p>A: All modern browsers (Chrome, Firefox, Safari, Edge). IE11 and older are not supported.</p>
+
+        <h3>Q: Does it work on mobile?</h3>
+        <p>A: Yes! ChaiCSS works on all mobile browsers (iOS Safari, Chrome Mobile, etc.).</p>
+
+        <h3>Q: Can I use it with TypeScript?</h3>
+        <p>A: Yes! The JavaScript works fine with TypeScript projects.</p>
+      </div>
+
+      <!-- COMPARISON -->
+      <div id="comparison" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Reference / Comparison</div>
+        <h1 class="section-title">📊 ChaiCSS vs Other Frameworks</h1>
+
+        <h2>Feature Comparison</h2>
+        <table>
+          <tr>
+            <th>Feature</th>
+            <th>ChaiCSS</th>
+            <th>Tailwind CSS</th>
+            <th>Bootstrap</th>
+          </tr>
+          <tr>
+            <td>Utilities</td>
+            <td>400+</td>
+            <td>1000+</td>
+            <td>500+</td>
+          </tr>
+          <tr>
+            <td>File Size</td>
+            <td>12 KB</td>
+            <td>50+ KB</td>
+            <td>150+ KB</td>
+          </tr>
+          <tr>
+            <td>Setup</td>
+            <td><span class="check">✓ Zero</span></td>
+            <td>PostCSS, Build tools</td>
+            <td>npm, Build tools</td>
+          </tr>
+          <tr>
+            <td>No Build Tool</td>
+            <td><span class="check">✓ Yes</span></td>
+            <td><span class="cross">No</span></td>
+            <td><span class="cross">No</span></td>
+          </tr>
+          <tr>
+            <td>Customization</td>
+            <td><span class="check">✓ Easy</span></td>
+            <td>Config file</td>
+            <td>SCSS variables</td>
+          </tr>
+          <tr>
+            <td>Learning Curve</td>
+            <td><span class="check">✓ Easy</span></td>
+            <td>Medium</td>
+            <td>Medium-Hard</td>
+          </tr>
+          <tr>
+            <td>Production Ready</td>
+            <td><span class="check">✓ Yes</span></td>
+            <td><span class="check">✓ Yes</span></td>
+            <td><span class="check">✓ Yes</span></td>
+          </tr>
+          <tr>
+            <td>Components</td>
+            <td>None (utilities only)</td>
+            <td>None (utilities only)</td>
+            <td><span class="check">✓ Included</span></td>
+          </tr>
+        </table>
+
+        <h2>When to Use ChaiCSS</h2>
+        <ul>
+          <li>✓ Small to medium projects</li>
+          <li>✓ Learning CSS frameworks</li>
+          <li>✓ Projects with minimal dependencies</li>
+          <li>✓ Prototyping ideas quickly</li>
+          <li>✓ Admin dashboards</li>
+          <li>✓ Landing pages</li>
+          <li>✓ Educational projects</li>
+        </ul>
+
+        <h2>When to Use Tailwind CSS</h2>
+        <ul>
+          <li>✓ Large production applications</li>
+          <li>✓ Complex design systems</li>
+          <li>✓ Professional teams</li>
+          <li>✓ Advanced customization needed</li>
+          <li>✓ Extensive component library desired</li>
+        </ul>
+
+        <h2>When to Use Bootstrap</h2>
+        <ul>
+          <li>✓ Need pre-built components</li>
+          <li>✓ Rapid prototyping</li>
+          <li>✓ Consistent design patterns</li>
+          <li>✓ Larger teams</li>
+          <li>✓ Long-term maintenance</li>
+        </ul>
+
+        <h2>Size Comparison Chart</h2>
+        <table>
+          <tr>
+            <th>Framework</th>
+            <th>Size</th>
+            <th>Utilities</th>
+            <th>Setup Complexity</th>
+          </tr>
+          <tr>
+            <td>ChaiCSS</td>
+            <td>12 KB</td>
+            <td>400+</td>
+            <td>Minimal</td>
+          </tr>
+          <tr>
+            <td>Tailwind</td>
+            <td>50+ KB</td>
+            <td>1000+</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Bootstrap</td>
+            <td>150+ KB</td>
+            <td>500+</td>
+            <td>Medium</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- STATISTICS -->
+      <div id="stats" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Resources / Statistics</div>
+        <h1 class="section-title">📊 ChaiCSS v2.0 Statistics</h1>
+
+        <h2>Utility Coverage</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-number">400+</div>
+            <div class="stat-label">Total Utilities</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">25</div>
+            <div class="stat-label">Categories</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">150+</div>
+            <div class="stat-label">Color Options</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">Flexbox Utils</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">13</div>
+            <div class="stat-label">Grid Utils</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Typography</div>
+          </div>
+        </div>
+
+        <h2>Growth from v1.0 to v2.0</h2>
+        <table>
+          <tr>
+            <th>Metric</th>
+            <th>v1.0</th>
+            <th>v2.0</th>
+            <th>Growth</th>
+          </tr>
+          <tr>
+            <td>Total Utilities</td>
+            <td>150</td>
+            <td>400+</td>
+            <td>+167%</td>
+          </tr>
+          <tr>
+            <td>Categories</td>
+            <td>15</td>
+            <td>25</td>
+            <td>+67%</td>
+          </tr>
+          <tr>
+            <td>File Size</td>
+            <td>8 KB</td>
+            <td>12 KB</td>
+            <td>+50%</td>
+          </tr>
+          <tr>
+            <td>Features/KB</td>
+            <td>18.75</td>
+            <td>33.3</td>
+            <td>+78%</td>
+          </tr>
+        </table>
+
+        <h2>Utility Breakdown by Category</h2>
+        <table>
+          <tr>
+            <th>Category</th>
+            <th>Count</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>Spacing (Padding/Margin)</td>
+            <td>14</td>
+            <td>Stable</td>
+          </tr>
+          <tr>
+            <td>Colors (Background)</td>
+            <td>40+</td>
+            <td><span class="tag expanded">Expanded</span></td>
+          </tr>
+          <tr>
+            <td>Colors (Text)</td>
+            <td>40+</td>
+            <td><span class="tag expanded">Expanded</span></td>
+          </tr>
+          <tr>
+            <td>Colors (Border)</td>
+            <td>30+</td>
+            <td><span class="tag expanded">Expanded</span></td>
+          </tr>
+          <tr>
+            <td>Typography</td>
+            <td>50+</td>
+            <td><span class="tag expanded">Expanded</span></td>
+          </tr>
+          <tr>
+            <td>Flexbox</td>
+            <td>30+</td>
+            <td><span class="tag expanded">Expanded</span></td>
+          </tr>
+          <tr>
+            <td>Grid</td>
+            <td>13</td>
+            <td><span class="tag new">New</span></td>
+          </tr>
+          <tr>
+            <td>Borders</td>
+            <td>17</td>
+            <td><span class="tag expanded">Expanded</span></td>
+          </tr>
+          <tr>
+            <td>Transitions</td>
+            <td>25+</td>
+            <td><span class="tag new">New</span></td>
+          </tr>
+          <tr>
+            <td>Transforms</td>
+            <td>25+</td>
+            <td><span class="tag new">New</span></td>
+          </tr>
+          <tr>
+            <td>Filters</td>
+            <td>23</td>
+            <td><span class="tag new">New</span></td>
+          </tr>
+          <tr>
+            <td>Backdrop Filters</td>
+            <td>8</td>
+            <td><span class="tag new">New</span></td>
+          </tr>
+          <tr>
+            <td>Positioning</td>
+            <td>20+</td>
+            <td><span class="tag expanded">Expanded</span></td>
+          </tr>
+        </table>
+
+        <h2>Performance Metrics</h2>
+        <table>
+          <tr>
+            <th>Metric</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td>File Size (Unminified)</td>
+            <td>12 KB</td>
+          </tr>
+          <tr>
+            <td>File Size (Minified)</td>
+            <td>~5 KB</td>
+          </tr>
+          <tr>
+            <td>Parse Time</td>
+            <td>&lt;1ms for 100 elements</td>
+          </tr>
+          <tr>
+            <td>Style Application</td>
+            <td>&lt;1ms per element</td>
+          </tr>
+          <tr>
+            <td>Dependencies</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Browser Support</td>
+            <td>All modern browsers</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- FILES -->
+      <div id="files" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Resources / Files</div>
+        <h1 class="section-title">📁 Project Files</h1>
+
+        <h2>Core Files</h2>
+        <table>
+          <tr>
+            <th>File</th>
+            <th>Purpose</th>
+            <th>Size</th>
+            <th>Use Case</th>
+          </tr>
+          <tr>
+            <td><code>chai-css-engine-v2.js</code></td>
+            <td>Core library - USE THIS!</td>
+            <td>12 KB</td>
+            <td>Include in your HTML</td>
+          </tr>
+          <tr>
+            <td><code>chai-css-engine.js</code></td>
+            <td>v1.0 version</td>
+            <td>8 KB</td>
+            <td>Legacy support</td>
+          </tr>
+          <tr>
+            <td><code>chai-css-demo-v2.html</code></td>
+            <td>Interactive demo</td>
+            <td>~50 KB</td>
+            <td>View examples</td>
+          </tr>
+        </table>
+
+        <h2>Documentation Files</h2>
+        <table>
+          <tr>
+            <th>File</th>
+            <th>Content</th>
+            <th>Read Time</th>
+          </tr>
+          <tr>
+            <td><code>FILE_INDEX.md</code></td>
+            <td>Navigation guide</td>
+            <td>5 min</td>
+          </tr>
+          <tr>
+            <td><code>README_v2_COMPLETE.md</code></td>
+            <td>Complete overview</td>
+            <td>10 min</td>
+          </tr>
+          <tr>
+            <td><code>QUICKSTART_v2.md</code></td>
+            <td>Practical guide</td>
+            <td>10 min</td>
+          </tr>
+          <tr>
+            <td><code>WHATS_NEW_v2.md</code></td>
+            <td>Changelog</td>
+            <td>15 min</td>
+          </tr>
+          <tr>
+            <td><code>UTILITIES_REFERENCE_v2.md</code></td>
+            <td>All utilities documented</td>
+            <td>Reference</td>
+          </tr>
+          <tr>
+            <td><code>README.md</code></td>
+            <td>v1.0 Documentation</td>
+            <td>Reference</td>
+          </tr>
+        </table>
+
+        <h2>Total Package Size</h2>
+        <table>
+          <tr>
+            <th>Component</th>
+            <th>Size</th>
+          </tr>
+          <tr>
+            <td>Library (chai-css-engine-v2.js)</td>
+            <td>12 KB</td>
+          </tr>
+          <tr>
+            <td>Demo HTML</td>
+            <td>~50 KB</td>
+          </tr>
+          <tr>
+            <td>Documentation (all MD files)</td>
+            <td>~150 KB</td>
+          </tr>
+          <tr>
+            <td>Total Package</td>
+            <td>~212 KB</td>
+          </tr>
+        </table>
+
+        <p style="margin-top: 20px; padding: 15px; background: var(--gray-50); border-radius: 6px;">
+          <strong>Note:</strong> Only the core library (12 KB) is needed in production. Documentation and demos are for reference only.
+        </p>
+      </div>
+
+      <!-- SOCIAL MEDIA -->
+      <div id="social" class="section">
+        <div class="breadcrumb"><a onclick="showSection('overview')">Home</a> / Resources / Social Media</div>
+        <h1 class="section-title">📱 Social Media Templates</h1>
+
+        <h2>LinkedIn Post #1 - Technical Deep Dive</h2>
+        <pre>🍵 I just built ChaiCSS v2.0 - a lightweight utility-first CSS engine in vanilla JavaScript!
+
+Expanded from 150 → 400+ utilities with:
+✨ Grid system (NEW)
+⚡ Smooth transitions (NEW)
+🎨 Advanced filters (NEW)
+💨 Glassmorphism effects (NEW)
+
+Still only 12 KB unminified!
+
+What's inside:
+• Complete Grid + Flexbox system
+• 40+ colors with light/dark variants
+• 50+ typography utilities
+• Scale, rotate, translate transforms
+• Blur, brightness, contrast filters
+• Zero dependencies
+• Backward compatible with v1.0
+
+Perfect for:
+→ Learning CSS deeply
+→ Building small-to-medium projects
+→ Understanding framework architecture
+→ Portfolio showcase
+
+GitHub: [LINK]
+Demo: [LINK]
+
+#WebDevelopment #JavaScript #CSS #OpenSource</pre>
+
+        <h2>Twitter Post</h2>
+        <pre>🍵 ChaiCSS v2.0 shipped!
+
+150 → 400+ utilities
+8 KB → 12 KB
+15 → 25 categories
+
+New features:
+✓ Grid system
+✓ Transforms & transitions  
+✓ Filters & effects
+✓ Glassmorphism
+✓ Advanced typography
+
+Still lighter than Tailwind (50+ KB) with more power
+
+[GITHUB_LINK]</pre>
+
+        <h2>Dev.to Post Hook</h2>
+        <pre>I expanded my ChaiCSS framework from 150 to 400+ utilities and here's what I learned about CSS, JavaScript, and framework design...</pre>
+
+        <h2>LinkedIn Strategy</h2>
+        <ul>
+          <li>Post technical deep dive (Day 1)</li>
+          <li>Share comparison with Tailwind (Day 3)</li>
+          <li>Post tutorial/example (Day 7)</li>
+          <li>Announce v2 features (Day 10)</li>
+          <li>Share real-world use cases (Day 14)</li>
+        </ul>
+
+        <h2>Best Hashtags</h2>
+        <p>
+          #WebDevelopment #JavaScript #CSS #OpenSource #FrontendDevelopment #CodingProject 
+          #UtilityCSS #Tailwind #Framework #WebDesign #Programming #CodeNewbie #LearnToCode
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => section.classList.remove('active'));
+
+      // Remove active class from all nav links
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => link.classList.remove('active'));
+
+      // Show selected section
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.classList.add('active');
+        window.scrollTo(0, 0);
+      }
+
+      // Mark clicked nav link as active
+      event.target.classList.add('active');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('📚 ChaiCSS v2.0 Complete Documentation loaded!');
+      console.log('💡 Use the sidebar to navigate');
+    });
+  </script>
+</body>
+</html>
